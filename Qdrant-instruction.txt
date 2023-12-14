@@ -1,0 +1,20 @@
+# Instructions to Setup Qdrant
+
+1. Ensure Docker is installed on your system. You can verify this by running the command:
+
+docker info
+
+If Docker is not installed, please follow the instructions on the official Docker website to install it.
+
+2. Pull the Qdrant image from Docker Hub:
+
+docker pull qdrant/qdrant
+
+
+3. Run the Qdrant image:
+
+docker run -p 6333:6333 -v .:/qdrant/storage qdrant/qdrant
+
+
+Now, you have successfully set up Qdrant on your system.
+

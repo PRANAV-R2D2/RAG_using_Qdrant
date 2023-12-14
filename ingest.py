@@ -3,24 +3,28 @@ from langchain.embeddings import HuggingFaceBgeEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
 
+# Load the PDF document
 loader = PyPDFLoader("data.pdf")
 documents = loader.load()
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=500,
-                                                   chunk_overlap=50)
+
+# Split the document into chunks
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
 texts = text_splitter.split_documents(documents)
 
 # Load the embedding model 
 model_name = "BAAI/bge-large-en"
 model_kwargs = {'device': 'cpu'}
-# model_kwargs = {'device': 'cuda'}  # Use 'cuda' for GPU
 encode_kwargs = {'normalize_embeddings': False}
+
 embeddings = HuggingFaceBgeEmbeddings(
     model_name=model_name,
     model_kwargs=model_kwargs,
     encode_kwargs=encode_kwargs
 )
 
-print("embedding model loaded")
+print("Embedding model loaded")
+
+# Create the vector database
 url = "http://localhost:6333"
 qdrant = Qdrant.from_documents(
     texts,
@@ -31,9 +35,3 @@ qdrant = Qdrant.from_documents(
 )
 
 print("Vector DB Successfully Created!")
-
-
-
-
-
-
